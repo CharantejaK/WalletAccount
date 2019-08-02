@@ -22,6 +22,8 @@ import com.leo.account.wallet.entity.Account;
 import com.leo.account.wallet.entity.Player;
 import com.leo.account.wallet.entity.Transaction;
 import com.leo.account.wallet.exception.BusinessException;
+import com.leo.account.wallet.exception.DuplicateTransactionCodeException;
+import com.leo.account.wallet.exception.InsufficientFundsException;
 import com.leo.account.wallet.type.TransactionType;
 
 @Component
@@ -100,11 +102,11 @@ public class TransactionDelegate {
 	private void validateTransaction(TransactionDto transactionDto, BigDecimal accountBalance, TransactionType transactionType) throws BusinessException {
 		Transaction transaction = transactionDao.findByTransactionCode(transactionDto.getTransactionCode());
 		if (transaction != null) {
-			throw new BusinessException("Transaction should be unique, please provide a unique transaction code");
+			throw new DuplicateTransactionCodeException();
 		}
 		
 		if (transactionType == TransactionType.DEBIT && accountBalance.subtract(transactionDto.getTransactionAmount()).compareTo(BigDecimal.ZERO) < 0) {
-			throw new BusinessException("Balance cannot be negative after the transaction");
+			throw new InsufficientFundsException();
 		}
 	}
 	
