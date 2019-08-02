@@ -21,6 +21,9 @@ import com.leo.account.wallet.dto.TransactionDto;
 import com.leo.account.wallet.dto.TransactionHistoryResponse;
 import com.leo.account.wallet.exception.BusinessException;
 
+/**
+ * The public API of the wallet Transaction solution.
+ */
 @RestController
 public class TransactionController {
 
@@ -29,8 +32,14 @@ public class TransactionController {
 	@Autowired
 	TransactionDelegate transactionDelegate;
 	
+	  /**
+     * Handling the save transaction decision process.
+     *
+     * @param transactionDto  request with the transaction amount, code and transaction Type
+     * @return the generic response
+     */
 	@PostMapping(value = "/saveTransaction", produces = (MediaType.APPLICATION_JSON_VALUE))
-	public @ResponseBody ResponseEntity<GenericResponse> saveTeam(@RequestBody TransactionDto transactionDto) {
+	public @ResponseBody ResponseEntity<GenericResponse> saveTransaction(@RequestBody TransactionDto transactionDto) {
 		GenericResponse response = null;
 		try {
 			response = transactionDelegate.saveTransaction(transactionDto);
@@ -44,7 +53,12 @@ public class TransactionController {
 		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	} 
 	
-	
+	  /**
+     * Handling the get balance request
+     *
+     * @param playerId  request with the playerId for whom the balance needs to be fetched
+     * @return the balance response with balance
+     */
 	@GetMapping(value = "/getBalance", produces = (MediaType.APPLICATION_JSON_VALUE))
 	public @ResponseBody ResponseEntity<BalanceEnquiryResponse> getBalance(
 			@RequestParam(required = true) Long playerId) {
@@ -63,6 +77,12 @@ public class TransactionController {
 		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	}
 	
+	  /**
+     * Handling the get balance request
+     *
+     * @param playerId  request with the playerId for whom the transaction history to be fetched
+     * @return the TransactionHistoryResponse response with the history of transactions 
+     */
 	@GetMapping(value = "/transactionHistory", produces = (MediaType.APPLICATION_JSON_VALUE))
 	public @ResponseBody ResponseEntity<TransactionHistoryResponse> getTransactionHistory(
 			@RequestParam(required = true) Long playerId) {

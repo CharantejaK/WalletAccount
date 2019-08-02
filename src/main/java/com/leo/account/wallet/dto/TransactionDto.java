@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * A class representing transaction details.
+ */
 @JsonIgnoreProperties
 public class TransactionDto {
 
