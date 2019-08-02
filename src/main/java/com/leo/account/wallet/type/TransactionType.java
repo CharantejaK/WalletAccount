@@ -1,5 +1,8 @@
 package com.leo.account.wallet.type;
 
+/**
+ * An Enum representing transaction type.
+ */
 public enum TransactionType {
 	DEBIT("debit", "debit transactions"), CREDIT("credit", "credit transactions");
 

@@ -11,16 +11,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties
 public class TransactionDto {
 
+	 /**
+     * The primary identifier of the player.
+     */
 	private Long playerId;
 	
+	 /**
+     * Unique identifier for a transaction
+     */
 	private String transactionCode;
 	
+	 /**
+     * identifier whether a transaction is debit or credit
+     */
 	private String transactionType;
 	
+	 /**
+     * amount for the transaction
+     */
 	private BigDecimal transactionAmount;
 	
+	 /**
+     * updated amount after a transaction is sucessfull
+     */
 	private BigDecimal updatedBalance;
 	
+	 /**
+     * date when the transaction is made
+     */
 	private LocalDate transactionDate;
 
 	public Long getPlayerId() {

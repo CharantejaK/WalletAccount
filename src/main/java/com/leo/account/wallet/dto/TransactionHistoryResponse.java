@@ -2,6 +2,9 @@ package com.leo.account.wallet.dto;
 
 import java.util.List;
 
+/**
+ * A class representing transaction History response.
+ */
 public class TransactionHistoryResponse extends GenericResponse {
 	private List<TransactionDto> transactions;
 
