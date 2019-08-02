@@ -1,7 +1,5 @@
 package com.leo.account.wallet.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,14 +24,14 @@ import com.leo.account.wallet.exception.BusinessException;
  */
 @RestController
 public class TransactionController {
-
-	Logger LOG = LoggerFactory.getLogger(TransactionController.class);
+	
 
 	@Autowired
 	TransactionDelegate transactionDelegate;
 	
 	  /**
-     * Handling the save transaction decision process.
+     * Handling the save transaction decision for both Debit and Credit Transactions, for debit pass "debit" and for credit pass "credit" as 
+     * transaction type in the request
      *
      * @param transactionDto  request with the transaction amount, code and transaction Type
      * @return the generic response
@@ -66,8 +64,7 @@ public class TransactionController {
 		BalanceEnquiryResponse response = null;
 		try {
 			response = transactionDelegate.getBalance(playerId);
-		} catch (BusinessException e) {
-			LOG.error("Exception while executing the sonar report ", e);
+		} catch (BusinessException e) {			
 			response = new BalanceEnquiryResponse();
 			response.setSuccess(Boolean.FALSE);
 			response.setMessage(e.getMessage());
@@ -90,8 +87,7 @@ public class TransactionController {
 		TransactionHistoryResponse response = null;
 		try {
 			response = transactionDelegate.getPlayerTransactions(playerId);
-		} catch (BusinessException e) {
-			LOG.error("Exception while executing the sonar report ", e);
+		} catch (BusinessException e) {			
 			response = new TransactionHistoryResponse();
 			response.setSuccess(Boolean.FALSE);
 			response.setMessage(e.getMessage());
