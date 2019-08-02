@@ -29,6 +29,7 @@ import com.leo.account.wallet.type.TransactionType;
 @Component
 public class TransactionDelegate {
 	public static final String PLAYER_OR_ACCOUNT_NOT_FOUND = "Player or account does not exist";
+	public static final String TRANSACTION_TYPE_NOT_FOUND = "Please enter a valid transaction either 'debit' or 'credit' ";
 
 	@Autowired
 	TransactionDao transactionDao;
@@ -42,7 +43,10 @@ public class TransactionDelegate {
 	@Transactional
 	public GenericResponse saveTransaction(TransactionDto transactionDto) throws BusinessException {
 		Account account = accountDao.findByPlayerId(transactionDto.getPlayerId());
-		TransactionType transactionType = TransactionType.getByCode(transactionDto.getTransactionType());	
+		TransactionType transactionType = TransactionType.getByCode(transactionDto.getTransactionType());		
+		if (transactionType == null) {
+			throw new BusinessException(TRANSACTION_TYPE_NOT_FOUND);
+		}
 		BigDecimal accountBalance = account.getBalance();
 		BigDecimal transactionAmount = transactionDto.getTransactionAmount();
 		validateTransaction(transactionDto, accountBalance, transactionType);	
